@@ -7,24 +7,35 @@ import Notfound from "../views/NotFound";
 import Recommend from "../views/Second/Recommend";
 import Ranking from "../views/Second/Ranking";
 import SongList from "../views/Second/SongList";
+import login from "../views/login";
+import index from "../views/index.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: "/", redirect: "/find" },
+  { path: "/login", component: login },
+  { path: "/", redirect: "login" },
   {
-    path: "/find",
-    component: Find,
+    path: "/index",
+    component: index,
+    redirect: "find",
     children: [
-      { path: "/", redirect: "recommend" },
-      { path: "recommend", component: Recommend },
-      { path: "ranking", component: Ranking },
-      { path: "songlist", component: SongList },
+      {
+        path: "/find",
+        component: Find,
+        children: [
+          { path: "/", redirect: "recommend" },
+          { path: "recommend", component: Recommend },
+          { path: "ranking", component: Ranking },
+          { path: "songlist", component: SongList },
+        ],
+      },
+      { path: "/my", component: My },
+      { path: "/part", component: Part },
+      { path: "/part/:username", component: Part },
     ],
   },
-  { path: "/my", component: My },
-  { path: "/part", component: Part },
-  { path: "/part/:username", component: Part },
+
   { path: "*", component: Notfound },
 ];
 
